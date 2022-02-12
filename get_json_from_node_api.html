@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=500">
+<title>nodeAPIからjson取得してくる</title>
+</head> 
+<body>
+    <div>
+        <p id="result"></p>
+    </div>
+</body>
+</html>
+<script>
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", 'http://localhost:9999/api/users');
+  xhr.send();
+  // 自動的に呼ばれる関数
+  xhr.onreadystatechange = () =>{
+    // readyState XMLHttpRequest の状態 4: リクエストが終了して準備が完了
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      const jsonObj = JSON.parse(xhr.responseText);      
+      const result = document.getElementById('result');
+      for (let item of jsonObj) {        
+          result.innerHTML = "id: " + item.id + "name: " + item.name; 
+      }
+    }  
+  }
+</script>
